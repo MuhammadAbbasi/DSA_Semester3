@@ -1,0 +1,184 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Oct 22 13:25:22 2018
+
+@author: K172374
+"""
+
+class Node (object):
+    def __init__(self,data):
+        self.data=data
+        self.next=None
+        
+        
+class singlylinkedlist(object):
+    def __init__(self):
+        self.head=None
+        self.tail=None
+        self.ctr=0
+    
+    def insert_beginning(self,data):
+        node=Node(data)
+        if self.head==None:
+            self.head=node
+        else:
+            node.next=self.head
+            self.head=node
+        self.ctr+=1
+        print("node inserted",data )
+        return
+    def insert_middle (self,pos,data) :
+         if pos==0:
+             self.insert_beginning(data)
+         elif pos==self.ctr+1:
+             self.insert_end(data)
+         else:
+             node=Node(data)
+             temp=self.head
+             i=0
+             while(i<pos-1):
+                 temp=temp.next
+                 i+=1
+             node.next=temp.next
+             temp.next=node
+             self.ctr+=1
+         return
+    def insert_end(self,data):
+        node=Node(data)
+        node.next=None
+        if self.head==None:
+            self.head=node
+            return
+        temp=self.head
+        while(temp.next is not None):
+            temp=temp.next
+            temp.next=node
+            self.ctr+=1
+            print("node inserted")
+        return
+    def delete_beginning(self):
+        if self.head==None:
+            print("no node exist")
+        elif self.ctr==1:
+            print("node deleted", self.head.data)
+            self.head=None
+            self.ctr-=1
+        else:
+            print("node deleted ",self.head.data)
+            self.head=self.head.next
+            self.ctr-=1
+        return
+    def delete_middle(self,pos):
+        if self.head==None:
+            print("no nodes exist ")
+        elif pos==0:
+            self.delete_beginning()
+        elif pos==self.ctr:
+            self.delete_end()
+        else:
+            temp=self.head
+            prev=temp
+            i=0
+            while(i<pos):
+                prev=temp
+                temp=temp.next
+                i+=1
+                prev.next=temp.next
+                print("node deleted ",temp.data)
+                temp.next=None
+                self.ctr-=1
+        return
+    def delete_end(self):
+        if self.ctr==0:
+            print ("no nodes exist")
+        elif self.ctr==1:
+            self.ctr=0
+            print("node deleted ",self.head.data)
+            self.head=None
+        else:
+            temp=self.head
+            prev=self.head
+            while(temp.next is not None ):
+                prev=temp
+                temp=temp.next
+                print("Node deleted ",temp.data)
+                prev.data=None
+                self.ctr-=1
+            return
+    def search(self,data):
+        current=self.head
+        found=False
+        while current and found is False:
+            if current.get_data()==data:
+                found=True
+            else:
+                current =current=current.get_next()
+        if current is None:
+                raise ValueError("data is not in list ")
+        return current
+    def traverse_forward(self):
+          if self.head==None:
+              print("no nodes exist")
+          print("traversal forward ")
+          temp=self.head
+          while (temp is not None):
+              print(temp.data)
+              temp=temp.next
+    def print_odd(self):
+       c = 0
+       if self.head==None:
+              print("no nodes exist")
+       else:
+          print("traversal forward ")
+          temp=self.head
+          while (temp is not None):
+              while c <= self.ctr:
+                  if c&1 != 1:
+                      print("traversal forward ")
+                  temp=self.head
+              print(temp.data)
+              temp=temp.next  
+              
+              
+linked_list= singlylinkedlist()
+print("1.insert at beginning ")
+print("2.insert at middle ")
+print("3.insert at end ")
+print("4.delete at beginning ")
+print("5.delete at middle ")
+print("6.delete at end")
+print("7.traversal forward ")
+print("8.count number of nodes ")
+print("9.odd nodes")
+print("10.exit")
+
+
+while True:
+        x=eval(input("enter your choice"))
+        if x==1:
+            a=input("enter the data to be inserted ")
+            linked_list.insert_beginning(a)
+        elif x==2:
+             a=input("enter the data to be inserted ")
+             b=int(input("enter the position "))
+             linked_list.insert_middle(b,a)
+        elif x==3:
+            a=input("enter the data to be inserted ")
+            linked_list.insert_end(a)
+        elif x==4:
+             linked_list.delete_beginning()
+        elif x==5:
+                a=int(input("enter the position "))   
+                linked_list.delete_middle(a)
+        elif x==6:
+              linked_list.delete_end()
+        elif x==7:
+             linked_list.traverse_forward()
+        elif x==8:
+             print ("total nodes are " ,linked_list.ctr)
+        elif x==9:
+           linked_list.print_odd()
+        else:
+             print("exit" ) 
+             break        
+     
